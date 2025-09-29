@@ -29,9 +29,9 @@ export function Hero({ title, description, className }: HeroProps) {
     <section className={cn("px-3 md:px-5 pt-2 pb-3", className)}>
       <div ref={heroRef} className="relative overflow-hidden rounded-2xl md:rounded-[28px] shadow-sm border bg-card" style={{ height: 'calc(88svh - 1.5rem)' }}>
         {/* Video background */}
-        <div className="absolute inset-0 hero-video-container overflow-hidden rounded-2xl md:rounded-[28px]">
+        <div className="absolute inset-0 overflow-hidden rounded-2xl md:rounded-[28px]" style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}>
           <video
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover rounded-2xl md:rounded-[28px]"
             src="/assets/bg.mp4"
             autoPlay
             playsInline
