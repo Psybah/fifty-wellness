@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu01Icon, Cancel01Icon, ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+import { createPortal } from "react-dom";
 
 type Props = {
   items?: { label: string; href?: string }[];
@@ -14,6 +15,29 @@ export default function MobileNav({ items = [
   { label: 'Contact Us' },
 ] }: Props) {
   const [open, setOpen] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(false);
+  useEffect(() => {
+    if (open) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = original; };
+    }
+  }, [open]);
+
+  // handle slide-in animation
+  useEffect(() => {
+    if (open) {
+      const id = requestAnimationFrame(() => setPanelOpen(true));
+      return () => cancelAnimationFrame(id);
+    } else {
+      setPanelOpen(false);
+    }
+  }, [open]);
+
+  const closeWithAnimation = () => {
+    setPanelOpen(false);
+    setTimeout(() => setOpen(false), 300);
+  };
   return (
     <>
       <button
@@ -23,16 +47,16 @@ export default function MobileNav({ items = [
       >
         <HugeiconsIcon icon={Menu01Icon} size={18} />
       </button>
-      {open && (
-        <div className="fixed inset-0 z-[9999] md:hidden" role="dialog" aria-modal="true">
-          <div className="absolute inset-0 bg-black/50" />
-          <aside className="absolute inset-0 bg-background flex flex-col" onKeyDown={(e) => { if (e.key === 'Escape') setOpen(false); }}>
+      {open && createPortal(
+        <div className="fixed inset-0 z-[9999] md:hidden" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') closeWithAnimation(); }}>
+          <div className="absolute inset-0 bg-black/50" onClick={closeWithAnimation} />
+          <aside className={`absolute right-0 top-0 h-full w-3/4 max-w-[420px] bg-background flex flex-col transform transition-transform duration-300 ${panelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
             <div className="flex items-center justify-between px-4 py-3 border-b">
               <div className="flex items-center gap-2">
                 <img src="/assets/logo.png" alt="logo" className="h-8 w-8" />
                 <span className="font-semibold">Fifty Firsts</span>
               </div>
-              <button aria-label="Close menu" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white" onClick={() => setOpen(false)} autoFocus>
+              <button aria-label="Close menu" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white" onClick={closeWithAnimation} autoFocus>
                 <HugeiconsIcon icon={Cancel01Icon} size={18} />
               </button>
             </div>
@@ -56,8 +80,8 @@ export default function MobileNav({ items = [
               </button>
             </div>
           </aside>
-        </div>
-      )}
+        </div>, document.body)
+      }
     </>
   );
 }
