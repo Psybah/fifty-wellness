@@ -29,7 +29,7 @@ export function Hero({ title, description, className }: HeroProps) {
     <section className={cn("px-3 md:px-5 pt-2 pb-3", className)}>
       <div ref={heroRef} className="relative overflow-hidden rounded-2xl md:rounded-[28px] shadow-sm border bg-card" style={{ height: 'calc(88svh - 1.5rem)' }}>
         {/* Video background */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 hero-video-container overflow-hidden rounded-2xl md:rounded-[28px]">
           <video
             className="h-full w-full object-cover"
             src="/assets/bg.mp4"
@@ -37,7 +37,6 @@ export function Hero({ title, description, className }: HeroProps) {
             playsInline
             muted
             loop
-            style={{ borderRadius: 'inherit', WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
           />
           <div className="absolute inset-0 bg-black/45" />
         </div>
