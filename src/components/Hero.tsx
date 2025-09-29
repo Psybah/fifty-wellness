@@ -37,6 +37,7 @@ export function Hero({ title, description, className }: HeroProps) {
             playsInline
             muted
             loop
+            style={{ borderRadius: 'inherit', WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
           />
           <div className="absolute inset-0 bg-black/45" />
         </div>
