@@ -32,11 +32,11 @@ export default function Stats({ items }: StatsProps) {
   }, []);
 
   return (
-    <section className="container mx-auto py-10">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <section className="container mx-auto py-8 md:py-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {items.map((s, i) => (
           <div key={i} className="text-center">
-            <p className="text-3xl md:text-4xl italic font-medium">
+            <p className="text-2xl md:text-4xl italic font-medium">
               <span
                 ref={(el) => {
                   if (el) refs.current[i] = el;
@@ -47,7 +47,7 @@ export default function Stats({ items }: StatsProps) {
               </span>
               {s.suffix || ""}
             </p>
-            <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
+            <p className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</p>
           </div>
         ))}
       </div>

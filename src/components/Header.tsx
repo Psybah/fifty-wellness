@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import MobileNav from "@/components/MobileNav";
 
 type HeaderProps = {
   className?: string;
@@ -49,13 +50,16 @@ export function Header({ className }: HeaderProps) {
           </NavigationMenu>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <Button size="sm" className="gap-2 rounded-full bg-brand-secondary">
             <span>Sign Up</span>
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white">
               <HugeiconsIcon icon={ArrowUpRight01Icon} size={16} color="#000000" />
             </span>
           </Button>
+        </div>
+        <div className="md:hidden">
+          <MobileNav />
         </div>
         </div>
       </div>
